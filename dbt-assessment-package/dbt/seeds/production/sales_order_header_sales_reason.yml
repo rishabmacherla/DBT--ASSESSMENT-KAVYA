@@ -1,0 +1,11 @@
+version: 2
+
+seeds:
+  - name: sales_order_header_sales_reason
+    description: contains sales data between 2011-01-01 to 2011-12-31.
+    config:
+      schema: production
+      column_types:
+        sales_order_id: integer
+        modified_date: timestamp
+        sales_reason_id: integer

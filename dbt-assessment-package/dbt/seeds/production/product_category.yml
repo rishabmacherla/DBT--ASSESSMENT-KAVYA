@@ -1,0 +1,10 @@
+version: 2
+
+seeds:
+  - name: product_category
+    config:
+      schema: production
+      column_types:
+        product_category_id: integer
+        name: varchar
+        modified_date: timestamp

@@ -1,0 +1,49 @@
+version: 2
+
+seeds:
+  - name: happiest_place_on_earth
+    config:
+      schema: mart
+    description: "Top rides at Disney theme parks around the world"
+    columns:
+      - name: ride_id
+        description: "Unique identifier for each ride"
+        tests:
+          - unique
+          - not_null
+
+      - name: ride_name
+        description: "Official name of the ride or attraction"
+        tests:
+          - not_null
+
+      - name: park_location
+        description: "Disney park where the ride is located"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Magic Kingdom', 'EPCOT', 'Hollywood Studios', 'Animal Kingdom', 'Disneyland', 'California Adventure', 'Disneyland Paris', 'Tokyo Disneyland', 'Tokyo DisneySea']
+
+      - name: land_area
+        description: "Themed land or area within the park where the ride is located"
+        tests:
+          - not_null
+
+      - name: ride_type
+        description: "Category or type of ride (e.g., roller_coaster, dark_ride, simulator)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['roller_coaster', 'dark_ride', 'simulator', 'drop_tower', 'log_flume', 'slot_car_ride', 'safari']
+
+      - name: thrill_level
+        description: "Intensity level of the ride experience"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['low', 'medium', 'high']
+
+      - name: year_opened
+        description: "Year the ride first opened to guests"
+        tests:
+          - not_null

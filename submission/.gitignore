@@ -1,0 +1,59 @@
+# dbt
+*logs
+*dbt_packages/
+*dbt_internal_packages/
+*target
+*.user.yml
+*package-lock.yml
+
+# macOS
+.DS_Store
+
+# DBT logs
+logs/
+dbt.log
+manifest.json
+run_results.json
+
+# VSCode settings (optional, if using VSCode)
+.vscode/
+
+# Python virtual environments
+**/dbt-env
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# MacOS and system files
+.DS_Store
+
+# Environment files
+.env
+.env.*
+
+# Ignore Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Ignore crash logs
+crash.log
+
+# Ignore Terraform variable overrides
+*.tfvars.json
+
+# Ignore provider lock files
+.terraform.lock.hcl
+
+# Ignore local Terraform directories
+.terraform/
+
+# Dagster Build Files
+**/dagster/build/**
+**/.tmp_dagster*
+
+# Local Dagster environment files
+**/dagster/history/**
+**/dagster/schedules/** 
+
+**/dagster_dma.egg-info/**

@@ -1,0 +1,13 @@
+dma_lab:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: adventureworks.duckdb
+      schema: mart
+      threads: 4
+
+      # DuckDB-specific settings
+      extensions:
+        - httpfs
+        - parquet

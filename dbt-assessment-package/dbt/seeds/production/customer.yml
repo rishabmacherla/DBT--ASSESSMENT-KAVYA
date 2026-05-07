@@ -1,0 +1,12 @@
+version: 2
+
+seeds:
+  - name: customer
+    config:
+      schema: production
+      column_types:
+        customer_id: integer
+        person_id: integer
+        store_id: integer
+        territory_id: integer
+

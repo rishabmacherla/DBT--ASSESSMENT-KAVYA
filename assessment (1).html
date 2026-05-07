@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DBT Hands-On Assessment – Documentation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+  :root {
+    --orange: #FF694B;
+    --dark:   #1A1A2E;
+    --mid:    #16213E;
+    --accent: #0F3460;
+    --teal:   #00B4D8;
+    --green:  #2EC4B6;
+    --light:  #F8F9FA;
+    --muted:  #6C757D;
+    --border: #DEE2E6;
+    --code-bg:#1E2A3A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    color: #212529;
+    background: #fff;
+    line-height: 1.7;
+    font-size: 14px;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    .no-print { display: none; }
+    .page-break { page-break-before: always; }
+    body { font-size: 12px; }
+    .cover { min-height: 100vh; }
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: linear-gradient(135deg, #1A1A2E 0%, #0F3460 60%, #1A1A2E 100%);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(255,105,75,0.08);
+    top: -100px; right: -100px;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(0,180,216,0.07);
+    bottom: -80px; left: -80px;
+  }
+  .cover-badge {
+    display: inline-block;
+    background: rgba(255,105,75,0.2);
+    border: 1px solid var(--orange);
+    color: var(--orange);
+    padding: 6px 18px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+  }
+  .cover h1 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    max-width: 700px;
+  }
+  .cover h1 span { color: var(--orange); }
+  .cover .subtitle {
+    font-size: 16px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 50px;
+    max-width: 500px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 50px;
+  }
+  .cover-meta-item { text-align: center; }
+  .cover-meta-item .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 4px;
+  }
+  .cover-meta-item .value {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .tech-badges {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .tech-badge {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 60px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .section-alt { background: #F8F9FA; }
+
+  /* ── HEADINGS ── */
+  .section-tag {
+    display: inline-block;
+    background: rgba(255,105,75,0.1);
+    color: var(--orange);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1A1A2E;
+    margin-bottom: 6px;
+    border-bottom: 3px solid var(--orange);
+    padding-bottom: 10px;
+    display: inline-block;
+  }
+  h3 {
+    font-size: 19px;
+    font-weight: 600;
+    color: #1A1A2E;
+    margin: 28px 0 10px;
+  }
+  h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 18px 0 8px;
+  }
+  p { margin-bottom: 12px; color: #3D4555; }
+
+  /* ── TASK HEADER ── */
+  .task-header {
+    background: linear-gradient(135deg, #1A1A2E, #0F3460);
+    color: #fff;
+    padding: 30px 36px;
+    border-radius: 12px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .task-header::after {
+    content: '';
+    position: absolute;
+    right: -20px; top: -20px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(255,105,75,0.15);
+  }
+  .task-num {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--orange);
+    margin-bottom: 6px;
+  }
+  .task-header h2 {
+    color: #fff;
+    border: none;
+    padding: 0;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .task-header p {
+    color: rgba(255,255,255,0.75);
+    margin: 0;
+    font-size: 13px;
+  }
+
+  /* ── CODE ── */
+  pre {
+    background: var(--code-bg);
+    color: #E8EAF0;
+    padding: 20px 24px;
+    border-radius: 10px;
+    overflow-x: auto;
+    margin: 16px 0;
+    font-family: 'Fira Code', monospace;
+    font-size: 12.5px;
+    line-height: 1.6;
+    border-left: 4px solid var(--orange);
+  }
+  code {
+    font-family: 'Fira Code', monospace;
+    background: #EEF2F7;
+    color: #C7254E;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12.5px;
+  }
+  pre code { background: transparent; color: inherit; padding: 0; }
+
+  /* ── CARDS ── */
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .card-orange { border-left: 4px solid var(--orange); }
+  .card-teal   { border-left: 4px solid var(--teal); }
+  .card-green  { border-left: 4px solid var(--green); }
+
+  /* ── REQUIREMENTS LIST ── */
+  .req-list { list-style: none; margin: 12px 0; }
+  .req-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px dashed #E9ECEF;
+    font-size: 13.5px;
+    color: #3D4555;
+  }
+  .req-list li:last-child { border: none; }
+  .check {
+    width: 20px; height: 20px;
+    background: var(--green);
+    border-radius: 50%;
+    color: #fff;
+    font-size: 11px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 13.5px;
+  }
+  .callout-orange {
+    background: rgba(255,105,75,0.08);
+    border-left: 4px solid var(--orange);
+    color: #5C2A1A;
+  }
+  .callout-blue {
+    background: rgba(15,52,96,0.07);
+    border-left: 4px solid var(--teal);
+    color: #0D3349;
+  }
+  .callout-green {
+    background: rgba(46,196,182,0.08);
+    border-left: 4px solid var(--green);
+    color: #1A4A47;
+  }
+  .callout strong { display: block; margin-bottom: 4px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* ── TABLE ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  th {
+    background: var(--dark);
+    color: #fff;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #E9ECEF;
+    color: #3D4555;
+  }
+  tr:nth-child(even) td { background: #F8F9FA; }
+
+  /* ── INTERVIEW QUESTIONS ── */
+  .iq-section { margin-bottom: 36px; }
+  .iq-category {
+    background: linear-gradient(90deg, #1A1A2E, #0F3460);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px 8px 0 0;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .iq-category .cat-num {
+    background: var(--orange);
+    color: #fff;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .iq-list {
+    border: 1px solid #DEE2E6;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
+  }
+  .iq-item {
+    padding: 13px 20px;
+    border-bottom: 1px solid #F0F2F5;
+    font-size: 13.5px;
+    color: #2D3748;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .iq-item:last-child { border: none; }
+  .iq-item:nth-child(even) { background: #FAFBFC; }
+  .iq-num {
+    color: var(--orange);
+    font-weight: 700;
+    font-size: 12px;
+    min-width: 26px;
+    margin-top: 1px;
+  }
+  .iq-difficulty {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .diff-easy   { background:#D4EDDA; color:#155724; }
+  .diff-medium { background:#FFF3CD; color:#856404; }
+  .diff-hard   { background:#F8D7DA; color:#721C24; }
+
+  /* ── IMPROVEMENT CARD ── */
+  .improve-item {
+    background: #fff;
+    border: 1px solid #DEE2E6;
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-bottom: 14px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .improve-icon {
+    width: 38px; height: 38px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .icon-orange { background: rgba(255,105,75,0.12); }
+  .icon-teal   { background: rgba(0,180,216,0.12); }
+  .icon-green  { background: rgba(46,196,182,0.12); }
+  .improve-body h4 { margin: 0 0 4px; font-size: 14px; color: #1A1A2E; }
+  .improve-body p  { margin: 0; font-size: 13px; color: #5A6474; }
+
+  /* ── TOC ── */
+  .toc { list-style: none; }
+  .toc li {
+    padding: 7px 0;
+    border-bottom: 1px dashed #E9ECEF;
+    font-size: 14px;
+  }
+  .toc li a { color: #1A1A2E; text-decoration: none; font-weight: 500; }
+  .toc li a:hover { color: var(--orange); }
+  .toc li .page-ref { float: right; color: var(--muted); font-size: 12px; }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 30px;
+    font-size: 12px;
+  }
+  .footer strong { color: var(--orange); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 4px;
+    background: linear-gradient(90deg, var(--orange), var(--teal));
+    margin: 0;
+  }
+
+  /* ── PILL ── */
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    margin: 2px 3px;
+  }
+  .pill-orange { background:rgba(255,105,75,0.12); color:var(--orange); }
+  .pill-teal   { background:rgba(0,180,216,0.12);  color:#007BFF; }
+  .pill-green  { background:rgba(46,196,182,0.12); color:#198754; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .mono { font-family:'Fira Code',monospace; font-size:12.5px; }
+
+  .schema-table td:first-child { font-weight:600; font-family:'Fira Code',monospace; color:#C7254E; font-size:12px; }
+  .schema-table td:nth-child(2) { color:#6C757D; font-size:12px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     COVER
+════════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">Technical Assessment Documentation</div>
+  <h1>DBT Hands-On<br><span>Assessment Report</span></h1>
+  <p class="subtitle">Complete walkthrough of implementation, design decisions, and interview preparation</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <div class="label">Project</div>
+      <div class="value">dma_lab</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">Database</div>
+      <div class="value">DuckDB (AdventureWorks)</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">dbt Version</div>
+      <div class="value">1.7.19</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">Date</div>
+      <div class="value">April 30, 2025</div>
+    </div>
+  </div>
+  <div class="tech-badges">
+    <span class="tech-badge">dbt-duckdb 1.7.3</span>
+    <span class="tech-badge">dbt_utils 1.3.1</span>
+    <span class="tech-badge">SCD Type 1 &amp; 2</span>
+    <span class="tech-badge">Incremental Models</span>
+    <span class="tech-badge">Window Functions</span>
+  </div>
+</div>
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     TABLE OF CONTENTS
+════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-tag">Navigation</div>
+  <h2>Table of Contents</h2>
+  <br>
+  <ul class="toc">
+    <li><a href="#overview">1 &nbsp; Assessment Overview &amp; Project Setup</a></li>
+    <li><a href="#task1">2 &nbsp; Task 1 — SCD Type-2 Snapshot (dim_product_scd2)</a></li>
+    <li><a href="#task2">3 &nbsp; Task 2 — SCD Type-1 Incremental Model (dim_product_scd1)</a></li>
+    <li><a href="#task3">4 &nbsp; Task 3 — Data Tests</a></li>
+    <li><a href="#task4">5 &nbsp; Task 4 — Tags &amp; Selectors</a></li>
+    <li><a href="#task5">6 &nbsp; Task 5 — 3-Month Rolling Average SQL</a></li>
+    <li><a href="#interview">7 &nbsp; Interview Questions (60+)</a></li>
+    <li><a href="#improvements">8 &nbsp; Suggested Improvements</a></li>
+  </ul>
+</div>
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 1: OVERVIEW
+════════════════════════════════════════════════════ -->
+<div class="section" id="overview">
+  <div class="section-tag">Section 1</div>
+  <h2>Assessment Overview &amp; Project Setup</h2>
+
+  <h3>What is dbt?</h3>
+  <p><strong>dbt (data build tool)</strong> is an open-source transformation framework that allows data engineers and analysts to write modular SQL and Jinja-based transformations that are version-controlled, tested, and documented. dbt handles the <em>T</em> in ELT — it transforms data that has already been loaded into a data warehouse.</p>
+  <p>Key capabilities used in this assessment: materialized models (tables/views/incremental), snapshots for SCD Type 2, built-in data testing, macros from the <code>dbt_utils</code> package, and selectors for targeted execution.</p>
+
+  <h3>Tech Stack</h3>
+  <div class="card-grid">
+    <div class="card card-orange">
+      <h4>Database</h4>
+      <p><strong>DuckDB</strong> — an in-process analytical database. AdventureWorks data is stored in <code>adventureworks.duckdb</code>. Schemas: <code>production</code> (source data) and <code>mart</code> (transformed output).</p>
+    </div>
+    <div class="card card-teal">
+      <h4>dbt Adapter</h4>
+      <p><strong>dbt-duckdb 1.7.3</strong> with packages <code>dbt_utils 1.3.1</code> (surrogate keys, macros) and <code>codegen 0.13.1</code> (YAML scaffolding).</p>
+    </div>
+    <div class="card card-green">
+      <h4>Schema Routing</h4>
+      <p>Custom <code>generate_schema_name</code> macro — uses the custom schema name directly instead of the default <code>target_schema__custom_schema</code> pattern. Snapshots go to <code>mart</code> schema.</p>
+    </div>
+    <div class="card card-orange">
+      <h4>Data Loading</h4>
+      <p>16 CSV seed files in <code>seeds/production/</code> loaded via <code>dbt seed</code>. Includes product, sales orders, customers, geography tables. Mart seed: <code>happiest_place_on_earth</code>.</p>
+    </div>
+  </div>
+
+  <h3>Source Data Model</h3>
+  <p>The three core tables used across Tasks 1–4:</p>
+  <table class="schema-table">
+    <tr><th>Table</th><th>Schema</th><th>Key Columns</th><th>Role</th></tr>
+    <tr><td>product</td><td>production</td><td>product_id, name, product_number, color, list_price, product_subcategory_id, date_modified</td><td>Central product entity</td></tr>
+    <tr><td>product_subcategory</td><td>production</td><td>product_subcategory_id, product_category_id, name</td><td>Level-2 classification</td></tr>
+    <tr><td>product_category</td><td>production</td><td>product_category_id, name</td><td>Level-1 classification (Bikes, Components, Clothing, Accessories)</td></tr>
+    <tr><td>sales_order_header</td><td>production</td><td>sales_order_id, order_date, customer_id</td><td>Order header (Task 5)</td></tr>
+    <tr><td>sales_order_detail</td><td>production</td><td>sales_order_id, product_id, order_qty, unit_price</td><td>Order lines (Task 5)</td></tr>
+  </table>
+
+  <div class="callout callout-blue">
+    <strong>Note on NULLs in product_subcategory_id</strong>
+    Many products (especially raw components like "Bearing Ball") have no subcategory assigned — the join is <code>LEFT JOIN</code> throughout to preserve all products and populate category/subcategory as NULL where unmapped.
+  </div>
+
+  <h3>Project File Structure</h3>
+  <pre>DBT/
+├── dbt_project.yml          # Project config, schema routing
+├── profiles.yml             # DuckDB connection (adventureworks.duckdb)
+├── packages.yml             # dbt_utils, codegen
+├── selectors.yml            # Task 4: named selector
+├── task5_solution.sql       # Task 5: rolling average
+├── macros/
+│   └── generate_schema_name.sql   # Custom schema name macro
+├── models/
+│   └── marts/
+│       ├── dim_product_scd1.sql   # Task 2
+│       └── schema.yml             # Task 3: data tests
+├── snapshots/
+│   └── dim_product_scd2.sql       # Task 1
+├── seeds/
+│   └── production/                # 15 CSV source tables
+└── tests/                         # Singular tests (empty)</pre>
+
+  <h3>Setup Commands</h3>
+  <pre>cd dbt-assessment-package
+python -m venv .venv
+.venv\Scripts\pip install --only-binary :all: duckdb==0.10.0
+.venv\Scripts\pip install dbt-duckdb==1.7.3 rich
+
+cd DBT
+dbt deps      # Install dbt_utils and codegen
+dbt seed      # Load 16 CSV files into DuckDB (PASS=16)
+dbt run       # Build dim_product_scd1 (PASS=1)
+dbt snapshot  # Build dim_product_scd2 (PASS=1)
+dbt test      # Run all data tests (PASS=14)</pre>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     TASK 1
+════════════════════════════════════════════════════ -->
+<div class="section page-break" id="task1">
+  <div class="task-header">
+    <div class="task-num">Task 1</div>
+    <h2>SCD Type-2 Snapshot — dim_product_scd2</h2>
+    <p>File: <span class="mono">snapshots/dim_product_scd2.sql</span> &nbsp;|&nbsp; Target schema: <code style="background:rgba(255,255,255,0.2);color:#fff">mart</code></p>
+  </div>
+
+  <h3>What is a Slowly Changing Dimension Type 2?</h3>
+  <p>A <strong>Slowly Changing Dimension Type 2 (SCD2)</strong> is a data warehousing pattern that <em>preserves the full history of changes</em> to a dimension. Instead of overwriting the old value, it inserts a new row and flags the old row as expired. This allows analysts to answer questions like "What was the product's price when this order was placed?" — a question SCD Type 1 cannot answer.</p>
+
+  <div class="card-grid">
+    <div class="card card-orange">
+      <h4>SCD2 Adds These dbt Columns Automatically</h4>
+      <ul class="req-list">
+        <li><span class="check">✓</span><div><code>dbt_scd_id</code> — hash of unique_key + check_cols, identifies each version</div></li>
+        <li><span class="check">✓</span><div><code>dbt_updated_at</code> — when dbt processed this row</div></li>
+        <li><span class="check">✓</span><div><code>dbt_valid_from</code> — when this version became active</div></li>
+        <li><span class="check">✓</span><div><code>dbt_valid_to</code> — when this version expired (NULL = currently active)</div></li>
+      </ul>
+    </div>
+    <div class="card card-teal">
+      <h4>Check Strategy vs Timestamp Strategy</h4>
+      <p>dbt offers two snapshot strategies:</p>
+      <ul class="req-list">
+        <li><span class="check">✓</span><div><strong>check</strong> — hashes specified columns and detects changes by value comparison. Used here.</div></li>
+        <li><span class="check" style="background:#6C757D">i</span><div><strong>timestamp</strong> — compares an <code>updated_at</code> column. Faster but requires a reliable timestamp on the source.</div></li>
+      </ul>
+      <p style="margin-top:8px;font-size:12.5px">We used <code>check</code> because <code>date_modified</code> in the product seed isn't reliably updated on every attribute change.</p>
+    </div>
+  </div>
+
+  <h3>Requirements Fulfilled</h3>
+  <ul class="req-list">
+    <li><span class="check">✓</span><div><strong>Req 1:</strong> SCD Type 2 implemented via dbt <code>{% snapshot %}</code> block — dbt manages inserts of new versions and expiry of old ones automatically.</div></li>
+    <li><span class="check">✓</span><div><strong>Req 2:</strong> Surrogate key generated using <code>dbt_utils.generate_surrogate_key(['p.product_id'])</code> — an MD5 hash of product_id, giving a stable, non-sequential key.</div></li>
+    <li><span class="check">✓</span><div><strong>Req 3:</strong> <code>strategy='check'</code> configured — detects changes by comparing hashed values of the monitored columns.</div></li>
+    <li><span class="check">✓</span><div><strong>Req 4:</strong> All 6 change-detection columns included in <code>check_cols</code>: product_name, product_number, color, list_price, product_category_name, product_subcategory_name.</div></li>
+    <li><span class="check">✓</span><div><strong>Req 5:</strong> Written to <code>mart</code> schema via <code>target_schema='mart'</code>. History verified: updating a product row and re-running <code>dbt snapshot</code> inserts a new version row with the old row's <code>dbt_valid_to</code> stamped.</div></li>
+  </ul>
+
+  <h3>Full Implementation</h3>
+  <pre>{% snapshot dim_product_scd2 %}
+
+{{
+    config(
+        target_schema='mart',
+        unique_key='product_id',
+        strategy='check',
+        check_cols=[
+            'product_name',
+            'product_number',
+            'color',
+            'list_price',
+            'product_category_name',
+            'product_subcategory_name'
+        ]
+    )
+}}
+
+select
+    p.product_id,
+    {{ dbt_utils.generate_surrogate_key(['p.product_id']) }} as product_key,
+    p.name                as product_name,
+    p.product_number,
+    p.color,
+    p.list_price,
+    pc.name               as product_category_name,
+    ps.name               as product_subcategory_name,
+    p.date_modified
+from {{ ref('product') }} as p
+left join {{ ref('product_subcategory') }} as ps
+    on p.product_subcategory_id = ps.product_subcategory_id
+left join {{ ref('product_category') }} as pc
+    on ps.product_category_id = pc.product_category_id
+
+{% endsnapshot %}</pre>
+
+  <h3>Key Design Decisions</h3>
+  <h4>Why LEFT JOIN instead of INNER JOIN?</h4>
+  <p>504 products are seeded, but many have <code>product_subcategory_id = NULL</code> (raw materials, sub-assembly parts). An INNER JOIN would silently drop these rows from the dimension — a data loss that would corrupt any fact-to-dimension join. <code>LEFT JOIN</code> retains all products and populates category columns as NULL for uncategorized products.</p>
+
+  <h4>Why product_id as unique_key (not product_key)?</h4>
+  <p>The <code>unique_key</code> in a snapshot is dbt's anchor — it identifies <em>which entity</em> changed so dbt can expire the old version and insert the new one. Using the surrogate key here would break this because the surrogate key is derived from product_id — they'd always match. <code>product_id</code> is the natural business key that stays constant across versions.</p>
+
+  <div class="callout callout-orange">
+    <strong>How to Verify History Tracking</strong>
+    1. Run <code>dbt seed</code> + <code>dbt snapshot</code> (initial load — all rows have dbt_valid_to = NULL).<br>
+    2. Edit a row in the product CSV (e.g. change list_price for product_id=1).<br>
+    3. Run <code>dbt seed --full-refresh</code> then <code>dbt snapshot</code> again.<br>
+    4. Query: <code>SELECT * FROM mart.dim_product_scd2 WHERE product_id = 1 ORDER BY dbt_valid_from;</code><br>
+    — You will see 2 rows: old version with dbt_valid_to stamped, new version with dbt_valid_to = NULL.
+  </div>
+
+  <h3>Sample Output Structure</h3>
+  <table>
+    <tr><th>product_id</th><th>product_key</th><th>product_name</th><th>list_price</th><th>dbt_valid_from</th><th>dbt_valid_to</th></tr>
+    <tr><td>1</td><td>a1b2c3...</td><td>Adjustable Race</td><td>0.00</td><td>2025-04-30 10:00</td><td>2025-04-30 11:00</td></tr>
+    <tr><td>1</td><td>a1b2c3...</td><td>Adjustable Race</td><td>49.99</td><td>2025-04-30 11:00</td><td><em>NULL (current)</em></td></tr>
+  </table>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     TASK 2
+════════════════════════════════════════════════════ -->
+<div class="section page-break" id="task2">
+  <div class="task-header">
+    <div class="task-num">Task 2</div>
+    <h2>SCD Type-1 Incremental Model — dim_product_scd1</h2>
+    <p>File: <span class="mono">models/marts/dim_product_scd1.sql</span> &nbsp;|&nbsp; Materialization: <code style="background:rgba(255,255,255,0.2);color:#fff">incremental</code></p>
+  </div>
+
+  <h3>SCD Type 1 vs SCD Type 2</h3>
+  <div class="card-grid">
+    <div class="card card-orange">
+      <h4>SCD Type 1 (This Task)</h4>
+      <ul class="req-list">
+        <li><span class="check">✓</span><div>Overwrites old values — no history kept</div></li>
+        <li><span class="check">✓</span><div>Always reflects the <em>current</em> state of the source</div></li>
+        <li><span class="check">✓</span><div>Use when history is irrelevant (e.g. correcting a typo)</div></li>
+        <li><span class="check">✓</span><div>Simpler queries — no need to filter for current version</div></li>
+      </ul>
+    </div>
+    <div class="card card-teal">
+      <h4>SCD Type 2 (Task 1)</h4>
+      <ul class="req-list">
+        <li><span class="check">✓</span><div>Inserts new rows on change — full history preserved</div></li>
+        <li><span class="check">✓</span><div>Supports "as-of" reporting ("what was the price then?")</div></li>
+        <li><span class="check">✓</span><div>More complex queries — must filter <code>WHERE dbt_valid_to IS NULL</code></div></li>
+        <li><span class="check">✓</span><div>Table grows over time with each change</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>How Incremental Materialization Works</h3>
+  <p>On the <strong>first run</strong>, dbt creates the table by running the full SELECT. On <strong>subsequent runs</strong>, the <code>{% if is_incremental() %}</code> block activates and filters the source to only new or changed rows. dbt then <code>MERGE</code>s these into the existing table using the <code>unique_key</code> to upsert (update existing + insert new).</p>
+
+  <div class="callout callout-blue">
+    <strong>Watermark Logic</strong>
+    <code>WHERE p.date_modified > (SELECT MAX(date_modified) FROM this)</code> — <code>{{ this }}</code> is a dbt Jinja reference to the model's own table in the warehouse. This pattern reads the highest timestamp already loaded and only processes rows newer than that boundary.
+  </div>
+
+  <h3>Requirements Fulfilled</h3>
+  <ul class="req-list">
+    <li><span class="check">✓</span><div><strong>Req 6:</strong> SCD Type 1 — new values overwrite old ones via <code>unique_key='product_key'</code> MERGE strategy.</div></li>
+    <li><span class="check">✓</span><div><strong>Req 7:</strong> Surrogate key via <code>dbt_utils.generate_surrogate_key(['p.product_id'])</code>.</div></li>
+    <li><span class="check">✓</span><div><strong>Req 8:</strong> Incremental materialization with <code>date_modified</code> watermark filter.</div></li>
+    <li><span class="check">✓</span><div><strong>Req 9:</strong> Updating a product and reseeding, then running <code>dbt run</code>, propagates the change into dim_product_scd1 — old value is overwritten.</div></li>
+    <li><span class="check">✓</span><div><strong>Req 10:</strong> Delete behavior — written answer below.</div></li>
+  </ul>
+
+  <h3>Full Implementation</h3>
+  <pre>/*
+  Task 2 - Delete behavior (Requirement 10):
+  When a row is deleted from the source (production.product), an incremental
+  model does NOT remove it from dim_product_scd1. The incremental filter only
+  processes rows where date_modified is newer than the current max — so the
+  deleted row is never touched and stays in the table indefinitely.
+
+  What SHOULD happen (SCD Type 1): the record should disappear to reflect the
+  current state of the source. Solutions:
+    a) Run dbt run --full-refresh to rebuild the table from scratch, or
+    b) Use delete+insert incremental strategy with a predicate covering all
+       active product_ids, or
+    c) Add a post-hook DELETE for product_ids no longer in the source.
+*/
+
+{{
+    config(
+        materialized='incremental',
+        unique_key='product_key',
+        tags=['product']
+    )
+}}
+
+select
+    {{ dbt_utils.generate_surrogate_key(['p.product_id']) }} as product_key,
+    p.product_id,
+    p.name                as product_name,
+    p.product_number,
+    p.color,
+    p.list_price,
+    pc.name               as product_category_name,
+    ps.name               as product_subcategory_name,
+    p.date_modified
+from {{ ref('product') }} as p
+left join {{ ref('product_subcategory') }} as ps
+    on p.product_subcategory_id = ps.product_subcategory_id
+left join {{ ref('product_category') }} as pc
+    on ps.product_category_id = pc.product_category_id
+
+{% if is_incremental() %}
+where p.date_modified > (select max(date_modified) from {{ this }})
+{% endif %}</pre>
+
+  <h3>Delete Behavior — Written Answer (Requirement 10)</h3>
+  <div class="callout callout-orange">
+    <strong>What Happens When a Row is Deleted from the Source?</strong>
+    <p style="color:#5C2A1A;margin-top:6px">The deleted product row <strong>remains in dim_product_scd1</strong>. The incremental watermark only compares <code>date_modified</code> timestamps — a deleted row produces no new timestamp event, so dbt never processes it. The stale row silently persists.</p>
+  </div>
+  <div class="callout callout-green">
+    <strong>What SHOULD Happen (SCD Type 1 Principle)?</strong>
+    <p style="color:#1A4A47;margin-top:6px">Since SCD1 represents <em>current state only</em>, deleted source rows should be removed from the dimension. Three viable solutions:</p>
+    <ol style="padding-left:20px;margin-top:6px;font-size:13.5px;color:#1A4A47">
+      <li style="margin-bottom:6px"><strong>Full refresh:</strong> <code>dbt run --full-refresh</code> rebuilds the table from scratch — simplest but most expensive at scale.</li>
+      <li style="margin-bottom:6px"><strong>delete+insert strategy:</strong> Set <code>incremental_strategy='delete+insert'</code> with a predicate that covers all product IDs in scope — dbt deletes the old partition then re-inserts.</li>
+      <li><strong>Post-hook DELETE:</strong> Add a post-hook that deletes from the target any <code>product_key</code> values not present in the current source query.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     TASK 3
+════════════════════════════════════════════════════ -->
+<div class="section page-break" id="task3">
+  <div class="task-header">
+    <div class="task-num">Task 3</div>
+    <h2>Data Tests</h2>
+    <p>File: <span class="mono">models/marts/schema.yml</span> &nbsp;|&nbsp; Tests run: <code style="background:rgba(255,255,255,0.2);color:#fff">dbt test</code></p>
+  </div>
+
+  <h3>dbt Testing Architecture</h3>
+  <div class="card-grid">
+    <div class="card card-orange">
+      <h4>Generic Tests (Used Here)</h4>
+      <p>Defined in <code>schema.yml</code> files inside model directories. dbt's four built-in generic tests: <code>not_null</code>, <code>unique</code>, <code>accepted_values</code>, <code>relationships</code>. Applied by column in YAML — no SQL needed.</p>
+    </div>
+    <div class="card card-teal">
+      <h4>Singular Tests</h4>
+      <p>Custom <code>.sql</code> files in the <code>tests/</code> directory. A test passes if the query returns <strong>zero rows</strong>. Used for complex business logic that generic tests can't express.</p>
+    </div>
+  </div>
+
+  <div class="callout callout-blue">
+    <strong>Why tests/ directory vs models/ directory?</strong>
+    dbt's <code>test-paths</code> (the <code>tests/</code> folder) only loads <code>.sql</code> singular tests. Generic test YAML must live in a model path (<code>model-paths</code>). Placing <code>schema.yml</code> in <code>tests/</code> would make dbt ignore it. The correct location for <code>not_null</code>/<code>unique</code> tests is <code>models/marts/schema.yml</code>.
+  </div>
+
+  <h3>Why These Tests Matter</h3>
+  <h4>product_key — not_null + unique</h4>
+  <p>The surrogate key is the primary join key between the dimension and any fact table. If it contains NULLs, fact rows will fail to join. If it has duplicates, joins will fan out and inflate metrics (a silent, dangerous bug). These two tests together enforce primary key integrity.</p>
+  <h4>product_id — not_null</h4>
+  <p>The natural business key must always be present. A NULL <code>product_id</code> would mean the surrogate key hash is computed on NULL input — producing identical surrogate keys for multiple products and breaking uniqueness.</p>
+
+  <h3>Implementation</h3>
+  <pre>version: 2
+
+models:
+  - name: dim_product_scd1
+    columns:
+      - name: product_key
+        tests:
+          - not_null
+          - unique
+      - name: product_id
+        tests:
+          - not_null</pre>
+
+  <h3>Test Run Results</h3>
+  <table>
+    <tr><th>Test Name</th><th>Column</th><th>Model</th><th>Result</th></tr>
+    <tr><td>not_null_dim_product_scd1_product_id</td><td>product_id</td><td>dim_product_scd1</td><td><span class="pill pill-green">PASS</span></td></tr>
+    <tr><td>not_null_dim_product_scd1_product_key</td><td>product_key</td><td>dim_product_scd1</td><td><span class="pill pill-green">PASS</span></td></tr>
+    <tr><td>unique_dim_product_scd1_product_key</td><td>product_key</td><td>dim_product_scd1</td><td><span class="pill pill-green">PASS</span></td></tr>
+  </table>
+
+  <h3>Run Command</h3>
+  <pre>dbt test --select dim_product_scd1
+# Output: PASS=3  WARN=0  ERROR=0  SKIP=0  TOTAL=3</pre>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     TASK 4
+════════════════════════════════════════════════════ -->
+<div class="section page-break" id="task4">
+  <div class="task-header">
+    <div class="task-num">Task 4</div>
+    <h2>Tags &amp; Selectors</h2>
+    <p>Files: <span class="mono">selectors.yml</span> &amp; tag in <span class="mono">dim_product_scd1.sql</span></p>
+  </div>
+
+  <h3>Why Tags and Selectors?</h3>
+  <p>In production dbt projects with hundreds of models, running <em>all</em> models for every pipeline is wasteful and slow. Tags and selectors let you target specific subsets of the DAG — by domain, by schedule, by team ownership. A <strong>tag</strong> is metadata attached to a model; a <strong>selector</strong> is a named, reusable way to select models by that metadata (or other criteria).</p>
+
+  <div class="card-grid">
+    <div class="card card-orange">
+      <h4>Tag Added to Model Config</h4>
+      <p>Tags can be set at model-level (in <code>config()</code>), directory-level (in <code>dbt_project.yml</code>), or in <code>schema.yml</code>. Here we tag inline in the config block for clarity:</p>
+      <pre style="margin-top:10px">config(
+    materialized='incremental',
+    unique_key='product_key',
+    tags=['product']   ← here
+)</pre>
+    </div>
+    <div class="card card-teal">
+      <h4>selectors.yml</h4>
+      <p>Selectors define named selection criteria. Multiple criteria can be combined with <code>union</code> or <code>intersection</code>:</p>
+      <pre style="margin-top:10px">selectors:
+  - name: product_models
+    description: All models tagged 'product'
+    definition:
+      method: tag
+      value: product</pre>
+    </div>
+  </div>
+
+  <h3>Running With the Selector</h3>
+  <pre># Run only models tagged 'product'
+dbt run --selector product_models
+
+# Output:
+# 1 of 1 START sql incremental model marts.dim_product_scd1 ... [RUN]
+# 1 of 1 OK created sql incremental model marts.dim_product_scd1 ... [OK in 0.93s]
+# Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1</pre>
+
+  <div class="callout callout-green">
+    <strong>Selectors vs --select flag</strong>
+    <code>dbt run --select tag:product</code> achieves the same result inline, but <code>selectors.yml</code> is reusable, version-controlled, and can encode complex multi-criteria logic. Selectors also support <code>union</code> (OR) and <code>intersection</code> (AND) of criteria — e.g. "all models tagged product AND in the marts directory."
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     TASK 5
+════════════════════════════════════════════════════ -->
+<div class="section page-break" id="task5">
+  <div class="task-header">
+    <div class="task-num">Task 5</div>
+    <h2>3-Month Rolling Average SQL</h2>
+    <p>File: <span class="mono">task5_solution.sql</span> &nbsp;|&nbsp; Run via: <code style="background:rgba(255,255,255,0.2);color:#fff">python query.py -f task5_solution.sql</code></p>
+  </div>
+
+  <h3>Business Question</h3>
+  <p>Calculate the <strong>3-month rolling average of total monthly sales</strong>. The average must return <code>NULL</code> for the first two months because there is not yet enough data to compute a full 3-month window. From month 3 onward, the average covers the current month plus the two preceding months.</p>
+
+  <h3>Query Breakdown</h3>
+
+  <h4>Step 1 — Aggregate to Monthly Sales (CTE)</h4>
+  <pre>with monthly_sales as (
+    select
+        date_trunc('month', h.order_date)::date as order_month,
+        sum(d.order_qty * d.unit_price)         as total_monthly_sales
+    from production.sales_order_detail as d
+    join production.sales_order_header as h
+        on d.sales_order_id = h.sales_order_id
+    group by date_trunc('month', h.order_date)::date
+)</pre>
+  <p><code>date_trunc('month', ...)</code> floors any date to the first of its month (e.g. 2011-07-15 → 2011-07-01). The <code>::date</code> cast removes the time component. <code>order_qty * unit_price</code> computes line-level revenue, then <code>SUM</code> aggregates across all products in the month.</p>
+
+  <h4>Step 2 — Window Function with NULL Enforcement</h4>
+  <pre>select
+    order_month,
+    total_monthly_sales,
+    case
+        when count(*) over (
+            order by order_month
+            rows between 2 preceding and current row
+        ) = 3
+        then avg(total_monthly_sales) over (
+            order by order_month
+            rows between 2 preceding and current row
+        )
+        else null
+    end as three_month_rolling_avg
+from monthly_sales
+order by order_month</pre>
+
+  <h3>Window Function Mechanics</h3>
+  <table>
+    <tr><th>Clause</th><th>What it does</th></tr>
+    <tr><td><code>ORDER BY order_month</code></td><td>Defines the sort order within the window — months are processed chronologically</td></tr>
+    <tr><td><code>ROWS BETWEEN 2 PRECEDING AND CURRENT ROW</code></td><td>Physical frame: exactly the current row + 2 rows before it in sort order</td></tr>
+    <tr><td><code>COUNT(*) OVER (...) = 3</code></td><td>Counts how many rows are actually in the window frame — evaluates to 1 or 2 for the first rows</td></tr>
+    <tr><td><code>AVG(...) OVER (...)</code></td><td>Computes the average only when the count confirms a full 3-row window is available</td></tr>
+  </table>
+
+  <div class="callout callout-orange">
+    <strong>ROWS vs RANGE — Critical Distinction</strong>
+    <code>ROWS BETWEEN 2 PRECEDING AND CURRENT ROW</code> counts <em>physical rows</em> — exactly the 3 rows in position. <code>RANGE BETWEEN INTERVAL '2 months' PRECEDING AND CURRENT ROW</code> counts by <em>value distance</em> — would include all rows within 2 months of the current date value, potentially including duplicate months or skipping gaps. For this use case with one row per month, ROWS is correct and more predictable.
+  </div>
+
+  <h3>Verified Output (First 8 Months)</h3>
+  <table>
+    <tr><th>order_month</th><th>total_monthly_sales</th><th>three_month_rolling_avg</th></tr>
+    <tr><td>2011-05-01</td><td>503,805.96</td><td>NULL</td></tr>
+    <tr><td>2011-06-01</td><td>458,910.82</td><td>NULL</td></tr>
+    <tr><td>2011-07-01</td><td>2,046,265.17</td><td>1,002,993.98</td></tr>
+    <tr><td>2011-08-01</td><td>2,496,365.15</td><td>1,667,180.38</td></tr>
+    <tr><td>2011-09-01</td><td>502,073.84</td><td>1,681,568.05</td></tr>
+    <tr><td>2011-10-01</td><td>4,590,875.12</td><td>2,529,771.37</td></tr>
+    <tr><td>2011-11-01</td><td>737,839.82</td><td>1,943,596.26</td></tr>
+    <tr><td>2011-12-01</td><td>1,196,286.60</td><td>2,175,000.51</td></tr>
+  </table>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     INTERVIEW QUESTIONS
+════════════════════════════════════════════════════ -->
+<div class="section page-break" id="interview">
+  <div class="section-tag">Section 7</div>
+  <h2>Interview Questions — 60+ Q&amp;A</h2>
+  <p style="margin-bottom:28px">Questions are grouped by topic and graded by difficulty: <span class="pill pill-green">Easy</span> <span class="pill" style="background:#FFF3CD;color:#856404">Medium</span> <span class="pill" style="background:#F8D7DA;color:#721C24">Hard</span>. Questions marked with ★ are directly tied to decisions made in this project.</p>
+
+  <!-- CAT 1 -->
+  <div class="iq-section">
+    <div class="iq-category"><span class="cat-num">1</span> dbt Core Concepts</div>
+    <div class="iq-list">
+      <div class="iq-item"><span class="iq-num">Q1</span><div>What is the difference between <code>ref()</code> and <code>source()</code> in dbt? When would you use each?</div><span class="iq-difficulty diff-easy">Easy</span></div>
+      <div class="iq-item"><span class="iq-num">Q2</span><div>What are the four built-in materialization types in dbt and when would you choose each?</div><span class="iq-difficulty diff-easy">Easy</span></div>
+      <div class="iq-item"><span class="iq-num">Q3</span><div>★ What does the custom <code>generate_schema_name</code> macro in this project do differently from dbt's default, and why would a team override it?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q4</span><div>What is the difference between <code>dbt run</code>, <code>dbt test</code>, and <code>dbt build</code>? Which is preferred in CI and why?</div><span class="iq-difficulty diff-easy">Easy</span></div>
+      <div class="iq-item"><span class="iq-num">Q5</span><div>How does dbt resolve the execution order of models across a project? What happens if there is a circular dependency?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q6</span><div>What is <code>dbt compile</code> and when is it useful for debugging?</div><span class="iq-difficulty diff-easy">Easy</span></div>
+      <div class="iq-item"><span class="iq-num">Q7</span><div>★ Why do seeds use <code>ref('product')</code> instead of <code>source('production', 'product')</code>? What is the trade-off?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q8</span><div>What is <code>package-lock.yml</code> in dbt and why should it be committed to version control?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q9</span><div>What does the <code>--defer</code> flag do in dbt and how does it enable slim CI pipelines?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q10</span><div>Explain the dbt DAG concept. How would you visualize and debug a model that is unexpectedly not running?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+    </div>
+  </div>
+
+  <!-- CAT 2 -->
+  <div class="iq-section">
+    <div class="iq-category"><span class="cat-num">2</span> Snapshot &amp; SCD Type-2 Internals</div>
+    <div class="iq-list">
+      <div class="iq-item"><span class="iq-num">Q11</span><div>★ What is the difference between the <code>check</code> and <code>timestamp</code> snapshot strategies? Why did this project use <code>check</code>?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q12</span><div>★ What are <code>dbt_valid_from</code>, <code>dbt_valid_to</code>, and <code>dbt_scd_id</code>? What do they contain for the <em>most recent</em> version of a record?</div><span class="iq-difficulty diff-easy">Easy</span></div>
+      <div class="iq-item"><span class="iq-num">Q13</span><div>If you run <code>dbt snapshot</code> twice with identical source data, what happens? Does it insert duplicate rows?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q14</span><div>★ How would you write a query to return only the <em>current</em> active record for each product from <code>dim_product_scd2</code>?</div><span class="iq-difficulty diff-easy">Easy</span></div>
+      <div class="iq-item"><span class="iq-num">Q15</span><div>★ A product is deleted from the source. What happens to its row in <code>dim_product_scd2</code>? How would you handle hard deletes in a snapshot?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q16</span><div>★ Why is <code>product_id</code> (not <code>product_key</code>) used as the <code>unique_key</code> in the snapshot config?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q17</span><div>What does the <code>invalidate_hard_deletes=true</code> config option do in a dbt snapshot?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q18</span><div>How would you add a new column to an existing SCD2 snapshot without losing historical data?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q19</span><div>What SQL does dbt execute under the hood when a snapshot detects a changed row? Describe the operation sequence.</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q20</span><div>Can you run data tests against a snapshot in dbt? If so, where would you define them?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+    </div>
+  </div>
+
+  <!-- CAT 3 -->
+  <div class="iq-section">
+    <div class="iq-category"><span class="cat-num">3</span> Incremental Models</div>
+    <div class="iq-list">
+      <div class="iq-item"><span class="iq-num">Q21</span><div>★ When does <code>is_incremental()</code> evaluate to <code>true</code> vs <code>false</code>? What forces it to false?</div><span class="iq-difficulty diff-easy">Easy</span></div>
+      <div class="iq-item"><span class="iq-num">Q22</span><div>★ What are the four incremental strategies available in dbt? Compare <code>merge</code> vs <code>delete+insert</code>.</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q23</span><div>★ You add a new column to <code>dim_product_scd1</code>. What happens when you run <code>dbt run</code> without <code>--full-refresh</code>? How do you fix it?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q24</span><div>★ The watermark strategy (<code>WHERE date_modified > MAX(date_modified)</code>) misses late-arriving data. Explain why and propose a fix.</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q25</span><div>What is the risk of running <code>dbt run --full-refresh</code> on an incremental model in production? How do you mitigate it?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q26</span><div>★ A product is deleted from the source. What happens to its row in <code>dim_product_scd1</code>? What are your three options to handle this correctly?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q27</span><div>What does <code>unique_key</code> do in an incremental model? What happens if two source rows have the same unique_key value?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q28</span><div>How would you implement an incremental model that handles both inserts and updates but uses an <code>event_timestamp</code> rather than an entity <code>modified_at</code>?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+    </div>
+  </div>
+
+  <!-- CAT 4 -->
+  <div class="iq-section">
+    <div class="iq-category"><span class="cat-num">4</span> Data Testing &amp; Quality</div>
+    <div class="iq-list">
+      <div class="iq-item"><span class="iq-num">Q29</span><div>★ What is the difference between generic tests and singular tests in dbt? Give an example of when you'd use each.</div><span class="iq-difficulty diff-easy">Easy</span></div>
+      <div class="iq-item"><span class="iq-num">Q30</span><div>★ Why are <code>not_null</code> and <code>unique</code> tests on <code>product_key</code> especially important given that it's a surrogate key?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q31</span><div>What does <code>dbt test --store-failures</code> do? How is it useful in debugging failed tests?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q32</span><div>How would you write a custom generic test in dbt that checks no product has a negative <code>list_price</code>?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q33</span><div>How would you use the <code>relationships</code> test to enforce referential integrity between <code>dim_product_scd1</code> and a sales fact table?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q34</span><div>What is source freshness in dbt and how does it differ from data tests?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q35</span><div>A <code>not_null</code> test on <code>product_id</code> fails in production. Walk through how you would debug and resolve it.</div><span class="iq-difficulty diff-hard">Hard</span></div>
+    </div>
+  </div>
+
+  <!-- CAT 5 -->
+  <div class="iq-section">
+    <div class="iq-category"><span class="cat-num">5</span> Tags, Selectors &amp; Orchestration</div>
+    <div class="iq-list">
+      <div class="iq-item"><span class="iq-num">Q36</span><div>★ What is the difference between <code>dbt run --select tag:product</code> and <code>dbt run --selector product_models</code>?</div><span class="iq-difficulty diff-easy">Easy</span></div>
+      <div class="iq-item"><span class="iq-num">Q37</span><div>★ How would you modify <code>selectors.yml</code> to select all models tagged "product" AND located in the marts directory?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q38</span><div>You have 3 teams each owning different domains. How would you use tags and selectors to allow each team to run only their models?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q39</span><div>What is the <code>+</code> operator in a dbt selector (e.g. <code>+dim_product_scd1</code>) and what does <code>dim_product_scd1+</code> select?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q40</span><div>How would you schedule this dbt project in Airflow or Prefect, ensuring snapshots run before mart models?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+    </div>
+  </div>
+
+  <!-- CAT 6 -->
+  <div class="iq-section">
+    <div class="iq-category"><span class="cat-num">6</span> SQL &amp; Window Functions</div>
+    <div class="iq-list">
+      <div class="iq-item"><span class="iq-num">Q41</span><div>★ Explain the window frame <code>ROWS BETWEEN 2 PRECEDING AND CURRENT ROW</code>. How does it differ from <code>RANGE BETWEEN 2 PRECEDING AND CURRENT ROW</code>?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q42</span><div>★ Why does the Task 5 query use <code>COUNT(*) OVER (...) = 3</code> in a CASE statement rather than using <code>LAG()</code> or <code>NULLIF()</code>?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q43</span><div>How would you rewrite the rolling average using <code>LAG()</code> functions instead of window aggregation? What are the trade-offs?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q44</span><div>What is the difference between <code>ROW_NUMBER()</code>, <code>RANK()</code>, and <code>DENSE_RANK()</code>? Give a use case for each.</div><span class="iq-difficulty diff-easy">Easy</span></div>
+      <div class="iq-item"><span class="iq-num">Q45</span><div>★ If there was a gap in the monthly sales data (no sales in August), how would the rolling average query behave? How would you handle this?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q46</span><div>What does <code>date_trunc('month', order_date)::date</code> do step by step? What is the difference between <code>date_trunc</code> and <code>extract</code>?</div><span class="iq-difficulty diff-easy">Easy</span></div>
+      <div class="iq-item"><span class="iq-num">Q47</span><div>How would you calculate the month-over-month percentage change in total sales alongside the rolling average?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+    </div>
+  </div>
+
+  <!-- CAT 7 -->
+  <div class="iq-section">
+    <div class="iq-category"><span class="cat-num">7</span> Data Modeling &amp; Dimensional Design</div>
+    <div class="iq-list">
+      <div class="iq-item"><span class="iq-num">Q48</span><div>★ Why use a surrogate key instead of the natural <code>product_id</code> as the primary key of the dimension?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q49</span><div>★ <code>dbt_utils.generate_surrogate_key()</code> uses MD5. What are the collision risks, and are they acceptable in practice?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q50</span><div>What is the difference between a star schema and a snowflake schema? Which pattern does this project use and why?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q51</span><div>★ The product dimension denormalizes category and subcategory names. What is the trade-off vs keeping them normalized?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q52</span><div>What is a conformed dimension and how would <code>dim_product_scd1</code> qualify as one?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q53</span><div>How would you model a SCD Type 3 (store previous value in a separate column) and when would you prefer it over Type 2?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q54</span><div>When would you choose an incremental model over a full-refresh table for a dimension like dim_product?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+    </div>
+  </div>
+
+  <!-- CAT 8 -->
+  <div class="iq-section">
+    <div class="iq-category"><span class="cat-num">8</span> Real-World Scenarios &amp; Production Gotchas</div>
+    <div class="iq-list">
+      <div class="iq-item"><span class="iq-num">Q55</span><div>★ Your incremental model has been running for 6 months. Someone discovers that 3 months of source data had incorrect prices. How do you fix the dimension without re-running everything?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q56</span><div>★ The snapshot stopped capturing changes. What are the five things you would check first?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q57</span><div>How do you handle different behavior for dev vs prod environments in dbt? How would you ensure snapshots write to <code>mart</code> in prod but <code>dev_mart</code> locally?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q58</span><div>A dbt model that joins product, subcategory, and category is running slowly. What optimization strategies would you apply?</div><span class="iq-difficulty diff-medium">Medium</span></div>
+      <div class="iq-item"><span class="iq-num">Q59</span><div>How would you implement CI/CD for this dbt project? What does a PR pipeline look like?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q60</span><div>★ If a product's subcategory is reassigned (e.g. moved from "Mountain Bikes" to "Road Bikes"), how do the SCD1 and SCD2 models behave differently? Which is more useful for a sales analyst?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q61</span><div>What is dbt's <code>on_schema_change</code> config for incremental models and what are its options? When would you use <code>append_new_columns</code> vs <code>fail</code>?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q62</span><div>You want to backfill 2 years of historical data into a new incremental model. How do you do this safely without disrupting ongoing daily runs?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+      <div class="iq-item"><span class="iq-num">Q63</span><div>★ The <code>dbt_project.yml</code> has <code>snapshots: +schema: marts</code> nested under <code>models:</code>. What is wrong with this and what effect does it have?</div><span class="iq-difficulty diff-hard">Hard</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     IMPROVEMENTS
+════════════════════════════════════════════════════ -->
+<div class="section page-break" id="improvements">
+  <div class="section-tag">Section 8</div>
+  <h2>Suggested Improvements</h2>
+  <p style="margin-bottom:24px">The assessment requirements are fully met. The following improvements would make this production-grade:</p>
+
+  <div class="improve-item">
+    <div class="improve-icon icon-orange">🔒</div>
+    <div class="improve-body">
+      <h4>Add <code>invalidate_hard_deletes=true</code> to the SCD2 Snapshot</h4>
+      <p>Currently, a product deleted from the source stays in <code>dim_product_scd2</code> as an open-ended record (dbt_valid_to = NULL forever). Adding <code>invalidate_hard_deletes=true</code> makes dbt automatically set <code>dbt_valid_to</code> when a source row disappears, properly closing out deleted records.</p>
+    </div>
+  </div>
+
+  <div class="improve-item">
+    <div class="improve-icon icon-teal">📋</div>
+    <div class="improve-body">
+      <h4>Replace <code>ref('product')</code> with <code>source()</code> + a <code>sources.yml</code></h4>
+      <p>Seeds are a dev convenience but in production the data would come from a raw schema, not CSVs. Defining <code>sources.yml</code> enables source freshness checks (<code>dbt source freshness</code>), better lineage documentation, and easier migration to a real warehouse source without changing model SQL.</p>
+    </div>
+  </div>
+
+  <div class="improve-item">
+    <div class="improve-icon icon-green">🧪</div>
+    <div class="improve-body">
+      <h4>Add Snapshot-Level Data Tests</h4>
+      <p>Create <code>snapshots/schema.yml</code> to add <code>not_null</code> on <code>dbt_valid_from</code>, <code>unique</code> on <code>dbt_scd_id</code>, and a singular test verifying no product has more than one row with <code>dbt_valid_to IS NULL</code>. These catch snapshot corruption early.</p>
+    </div>
+  </div>
+
+  <div class="improve-item">
+    <div class="improve-icon icon-orange">⚡</div>
+    <div class="improve-body">
+      <h4>Use <code>delete+insert</code> Incremental Strategy for SCD1 Delete Handling</h4>
+      <p>Configure <code>incremental_strategy='delete+insert'</code> with <code>partition_by</code> on a date column. This resolves the delete-blindness problem without requiring a full-refresh, and is significantly safer at scale than post-hook DELETEs.</p>
+    </div>
+  </div>
+
+  <div class="improve-item">
+    <div class="improve-icon icon-teal">🔢</div>
+    <div class="improve-body">
+      <h4>Add <code>on_schema_change='append_new_columns'</code> to the Incremental Model</h4>
+      <p>Currently, adding a new column to <code>dim_product_scd1</code> without <code>--full-refresh</code> silently succeeds but the new column is missing from the table. Setting <code>on_schema_change='append_new_columns'</code> makes dbt automatically ALTER the table to add the new column, preventing silent data loss.</p>
+    </div>
+  </div>
+
+  <div class="improve-item">
+    <div class="improve-icon icon-green">🏷️</div>
+    <div class="improve-body">
+      <h4>Add More Robust Data Tests</h4>
+      <p>Extend <code>schema.yml</code> with: <code>accepted_values</code> on <code>product_category_name</code> (Bikes, Components, Clothing, Accessories), a <code>relationships</code> test linking <code>product_id</code> back to the seed, and a custom singular test asserting <code>list_price >= 0</code>. This turns the test suite from a safety net into a data contract.</p>
+    </div>
+  </div>
+
+  <div class="improve-item">
+    <div class="improve-icon icon-orange">🔄</div>
+    <div class="improve-body">
+      <h4>Fix the Misplaced Snapshot Config in <code>dbt_project.yml</code></h4>
+      <p>The current <code>dbt_project.yml</code> has <code>snapshots: +schema: marts</code> nested under <code>models:</code> — dbt interprets this as a subdirectory config for a folder called "snapshots" inside the models path, not as snapshot configuration. Move it to a top-level <code>snapshots:</code> key to actually apply it.</p>
+    </div>
+  </div>
+
+  <div class="improve-item">
+    <div class="improve-icon icon-teal">🚀</div>
+    <div class="improve-body">
+      <h4>Add CI/CD Pipeline Configuration</h4>
+      <p>Add a <code>.github/workflows/dbt_ci.yml</code> (or equivalent) that runs <code>dbt build --select state:modified+</code> on every PR using the <code>--defer</code> flag against the production manifest. This runs only changed models and their downstream dependents, keeping CI fast and cheap.</p>
+    </div>
+  </div>
+
+  <div class="improve-item">
+    <div class="improve-icon icon-green">📊</div>
+    <div class="improve-body">
+      <h4>Add Task 5 as a dbt Model Instead of a Standalone SQL File</h4>
+      <p>The rolling average query would be more maintainable as <code>models/marts/fct_monthly_sales_rolling_avg.sql</code> — it would be version-controlled, testable (e.g. <code>not_null</code> on <code>order_month</code>), and documented in the dbt DAG. The standalone <code>task5_solution.sql</code> file is outside the dbt graph entirely.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="divider"></div>
+<div class="footer">
+  <p>DBT Hands-On Assessment Documentation &nbsp;|&nbsp; Project: <strong>dma_lab</strong> &nbsp;|&nbsp; dbt-duckdb 1.7.3 &nbsp;|&nbsp; April 30, 2025</p>
+  <p style="margin-top:6px">All tasks implemented and verified: PASS=16 (seed) · PASS=1 (run) · PASS=1 (snapshot) · PASS=14 (test) · Selector verified</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+version: 2
+
+seeds:
+  - name: address
+    config:
+      schema: production
+      column_types:
+        address_id: integer
+        state_province_id: integer
+        city: varchar
+        address_line2: varchar
+        modified_date: timestamp
+        row_guid: varchar
+        postal_code: varchar
+        spatial_location: varchar
+        address_line1: varchar
+

@@ -1,0 +1,11 @@
+version: 2
+
+seeds:
+  - name: sales_reason
+    config:
+      schema: production
+      column_types:
+        sales_reason_id: integer
+        name: varchar
+        reason_type: varchar
+        modified_date: timestamp

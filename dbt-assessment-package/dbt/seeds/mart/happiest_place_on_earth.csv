@@ -1,0 +1,21 @@
+ride_id,ride_name,park_location,land_area,ride_type,thrill_level,year_opened
+1,Space Mountain,Magic Kingdom,Tomorrowland,roller_coaster,high,1975
+2,Pirates of the Caribbean,Magic Kingdom,Adventureland,dark_ride,low,1973
+3,Haunted Mansion,Magic Kingdom,Liberty Square,dark_ride,low,1971
+4,Big Thunder Mountain Railroad,Magic Kingdom,Frontierland,roller_coaster,medium,1980
+5,Splash Mountain,Magic Kingdom,Frontierland,log_flume,medium,1992
+6,Seven Dwarfs Mine Train,Magic Kingdom,Fantasyland,roller_coaster,medium,2014
+7,Tower of Terror,Hollywood Studios,Sunset Boulevard,drop_tower,high,1994
+8,Rock 'n' Roller Coaster,Hollywood Studios,Sunset Boulevard,roller_coaster,high,1999
+9,Star Wars: Rise of the Resistance,Hollywood Studios,Galaxy's Edge,dark_ride,medium,2019
+10,Millennium Falcon: Smugglers Run,Hollywood Studios,Galaxy's Edge,simulator,medium,2019
+11,Test Track,EPCOT,Future World,slot_car_ride,high,1999
+12,Soarin',EPCOT,The Land,simulator,low,2005
+13,Frozen Ever After,EPCOT,World Showcase,dark_ride,low,2016
+14,Guardians of the Galaxy: Cosmic Rewind,EPCOT,World Celebration,roller_coaster,high,2022
+15,Avatar Flight of Passage,Animal Kingdom,Pandora,simulator,medium,2017
+16,Expedition Everest,Animal Kingdom,Asia,roller_coaster,high,2006
+17,Kilimanjaro Safaris,Animal Kingdom,Africa,safari,low,1998
+18,Dinosaur,Animal Kingdom,DinoLand USA,dark_ride,medium,1998
+19,Matterhorn Bobsleds,Disneyland,Fantasyland,roller_coaster,medium,1959
+20,Indiana Jones Adventure,Disneyland,Adventureland,dark_ride,medium,1995

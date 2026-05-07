@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: dim_product_scd1
+    columns:
+      - name: product_key
+        tests:
+          - not_null
+          - unique
+      - name: product_id
+        tests:
+          - not_null

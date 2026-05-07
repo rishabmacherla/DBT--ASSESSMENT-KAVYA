@@ -1,0 +1,6 @@
+selectors:
+  - name: product_models
+    description: Selects all models tagged with 'product'
+    definition:
+      method: tag
+      value: product

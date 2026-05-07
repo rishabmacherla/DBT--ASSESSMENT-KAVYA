@@ -1,0 +1,14 @@
+version: 2
+
+seeds:
+  - name: credit_card
+    config:
+      schema: production
+      column_types:
+        credit_card_id: integer
+        card_type: varchar
+        exp_year: smallint
+        modified_date: timestamptz
+        exp_month: smallint
+        card_number: varchar
+

@@ -1,0 +1,14 @@
+version: 2
+
+seeds:
+  - name: product
+    config:
+      schema: production
+      column_types:
+        product_id: integer
+        name: varchar
+        product_number: varchar
+        color: varchar
+        list_price: numeric
+        product_subcategory_id: integer
+        date_modified: timestamp

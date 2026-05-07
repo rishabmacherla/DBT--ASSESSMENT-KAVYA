@@ -1,0 +1,15 @@
+version: 2
+
+seeds:
+  - name: state_province
+    config:
+      schema: production
+      column_types:
+        state_province_id: integer
+        country_region_code: varchar
+        modified_date: timestamp
+        row_guid: varchar
+        name: varchar
+        territory_id: integer
+        is_only_state_province_flag: boolean
+        state_province_code: varchar

@@ -1,0 +1,17 @@
+version: 2
+
+seeds:
+  - name: sales_order_detail
+    description: contains sales data between 2011-01-01 to 2011-12-31.
+    config:
+      schema: production
+      column_types:
+        sales_order_id: integer
+        order_qty: smallint
+        sales_order_detail_id: integer
+        unit_price: numeric
+        special_offer_id: integer
+        modified_date: timestamp
+        row_guid: varchar
+        product_id: integer
+        unit_price_discount: numeric
